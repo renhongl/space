@@ -1,0 +1,19 @@
+get:
+
+http://localhost:8000/user/?userName=renhongl
+
+post: 
+{"userName": "test001", "userPassword": "123456", "userIcon": "https://cdn1.iconfinder.com/data/icons/rcons-user-action/512/user-512.png", "userGender": "male"}
+
+
+success:
+{
+    "status": "00000000",
+    "result": {}
+}
+
+fail: 
+{
+    "status": "00000001",
+    "message": "why failed"
+}
