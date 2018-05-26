@@ -23,9 +23,9 @@ export default class UserSetting extends React.Component{
 
     logout(history) {
         window.sessionStorage.removeItem('userObj');
+        message.success('注销成功。');
         setTimeout(() => {
-          history.push('/');
-          message.success('注销成功。');
+          history.push('/login');
         }, 1000);
       }
 

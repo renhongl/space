@@ -29,6 +29,10 @@ export default class LoginPage extends React.Component{
     })
   }
 
+  onSignup = (history) => {
+    history.push('/signup');
+  }
+
   onLogin = (history) => {
     axios.get(URL.LOGIN, {
       params: {
@@ -39,9 +43,10 @@ export default class LoginPage extends React.Component{
       if (result.data.status === Status.SUCCESS) {
         message.success(`登陆成功，欢迎"${this.state.userName}"访问我们的空间。`);
         window.sessionStorage.setItem('userObj', JSON.stringify(result.data.result));
+        this.props.Auth.login();
         setTimeout(() => {
           history.push('/');
-        }, 2000);
+        }, 1000);
       } else {
         message.error(`登陆失败，失败信息：${result.data.message}`);
       }
@@ -53,6 +58,13 @@ export default class LoginPage extends React.Component{
       <Route render={({ history}) => (
         <Button color='teal' fluid size='large' onClick={() => this.onLogin(history)}>登录</Button>
       )} />
+    )
+    const RouteSignup = () => (
+      <Route render={
+        ({history}) => (
+          <a href='#' onClick={() => this.onSignup(history)}>注册</a>
+        )
+      }/>
     )
     return (
     <div className='login-form'>
@@ -100,7 +112,7 @@ export default class LoginPage extends React.Component{
             </Segment>
           </Form>
           <Message>
-            新用户? <a href='#'>注册</a>
+            新用户? <RouteSignup />
           </Message>
         </Grid.Column>
       </Grid>

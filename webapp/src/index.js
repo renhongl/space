@@ -8,18 +8,55 @@ import MomentPage from './page/MomentPage';
 import AlbumPage from './page/AlbumPage';
 import MessageBoardPage from './page/MessageBoardPage';
 import registerServiceWorker from './registerServiceWorker';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import 'antd/dist/antd.css';
+
+const Auth = {
+    authed: window.sessionStorage.getItem('userObj') ? true : false,
+    login() {
+        this.authed = true;
+    },
+    logout() {
+        this.authed = false;
+    }
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={props =>
+        Auth.authed ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+            }}
+          />
+        )
+      }
+    />
+  );
+
+  const AuthRoute = ({ component: Component, Auth: Auth, ...rest }) => (
+    <Route
+      {...rest}
+      render={props =>
+          <Component Auth={Auth} />
+      }
+    />
+  );
+
 
 ReactDOM.render(
     <Router>
         <div>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/signup" component={SignupPage} />
-        <Route path="/moment" component={MomentPage} />
-        <Route path="/album" component={AlbumPage} />
-        <Route path="/messageboard" component={MessageBoardPage} />
+        <PrivateRoute exact path="/" component={HomePage} />
+        <AuthRoute path="/login" component={LoginPage} Auth={Auth}/>
+        <AuthRoute path="/signup" component={SignupPage}  Auth={Auth}/>
+        <PrivateRoute path="/moment" component={MomentPage} />
+        <PrivateRoute path="/album" component={AlbumPage} />
+        <PrivateRoute path="/messageboard" component={MessageBoardPage} />
         </div>
     </Router>, 
     document.getElementById('root')

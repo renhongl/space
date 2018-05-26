@@ -1,7 +1,7 @@
 
 
 const LOCAL = 'http://localhost:8000';
-const CLOUD = 'http://47.74.217.61:8080';
+const CLOUD = 'http://www.tumogu.cn:8080';
 
 const local = false;
 
@@ -12,5 +12,6 @@ export const URL = (() => {
     }
     return {
         LOGIN: server + '/user/',
+        SIGNUP: server + '/user/',
     }
 })()

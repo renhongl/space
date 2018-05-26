@@ -33,7 +33,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    '47.74.217.61'
+    '47.74.217.61',
+    'www.tumogu.cn',
+    'tumogu.cn'
 ]
 
 
