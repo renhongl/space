@@ -1,55 +1,110 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import axios from 'axios'
+import {URL} from '../constant/url'
+import {Status} from '../constant/status'
+import { message } from 'antd'
+import { Route } from 'react-router-dom'
 
-const LoginForm = () => (
-  <div className='login-form'>
-    {/*
-      Heads up! The styles below are necessary for the correct render of this example.
-      You can do same with CSS, the main idea is that all the elements up to the `Grid`
-      below must have a height of 100%.
-    */}
-    <style>{`
-      body > div,
-      body > div > div,
-      body > div > div > div.login-form {
-        height: 100%;
+
+export default class LoginPage extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      userName: '',
+      password: '',
+      openPortal: false
+    }
+  }
+
+  onUserNameChange = (e, input) => {
+    this.setState({
+      userName: input.value
+    })
+  }
+
+  onPasswoardChange = (e, input) => {
+    this.setState({
+      password: input.value
+    })
+  }
+
+  onLogin = (history) => {
+    axios.get(URL.LOGIN, {
+      params: {
+        userName: this.state.userName,
+        password: this.state.password
       }
-    `}</style>
-    <Grid
-      textAlign='center'
-      style={{ height: '100%' }}
-      verticalAlign='middle'
-    >
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as='h2' color='teal' textAlign='center'>
-          <Image src='/logo.png' />
-          {' '}登录你的账号
-        </Header>
-        <Form size='large'>
-          <Segment stacked>
-            <Form.Input
-              fluid
-              icon='user'
-              iconPosition='left'
-              placeholder='E-mail address'
-            />
-            <Form.Input
-              fluid
-              icon='lock'
-              iconPosition='left'
-              placeholder='Password'
-              type='password'
-            />
+    }).then(result => {
+      if (result.data.status === Status.SUCCESS) {
+        message.success(`登陆成功，欢迎"${this.state.userName}"访问我们的空间。`);
+        window.sessionStorage.setItem('userObj', JSON.stringify(result.data.result));
+        setTimeout(() => {
+          history.push('/');
+        }, 2000);
+      } else {
+        message.error(`登陆失败，失败信息：${result.data.message}`);
+      }
+    })
+  }
 
-            <Button color='teal' fluid size='large'>登录</Button>
-          </Segment>
-        </Form>
-        <Message>
-          新用户? <a href='#'>注册</a>
-        </Message>
-      </Grid.Column>
-    </Grid>
-  </div>
-)
-
-export default LoginForm
+  render(){
+    const RouteButton = () => (
+      <Route render={({ history}) => (
+        <Button color='teal' fluid size='large' onClick={() => this.onLogin(history)}>登录</Button>
+      )} />
+    )
+    return (
+    <div className='login-form'>
+      {/*
+        Heads up! The styles below are necessary for the correct render of this example.
+        You can do same with CSS, the main idea is that all the elements up to the `Grid`
+        below must have a height of 100%.
+      */}
+      <style>{`
+        body > div,
+        body > div > div,
+        body > div > div > div.login-form {
+          height: 100%;
+        }
+      `}</style>
+      <Grid
+        textAlign='center'
+        style={{ height: '100%' }}
+        verticalAlign='middle'
+      >
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Header as='h2' color='teal' textAlign='center'>
+            <Image src='./assets/logo.png' />
+            {' '}登录你的账号
+          </Header>
+          <Form size='large'>
+            <Segment stacked>
+              <Form.Input
+                fluid
+                icon='user'
+                iconPosition='left'
+                placeholder='E-mail address'
+                onChange={this.onUserNameChange}
+              />
+              <Form.Input
+                fluid
+                icon='lock'
+                iconPosition='left'
+                placeholder='Password'
+                type='password'
+                onChange={this.onPasswoardChange}
+              />
+              <RouteButton/>
+              
+            </Segment>
+          </Form>
+          <Message>
+            新用户? <a href='#'>注册</a>
+          </Message>
+        </Grid.Column>
+      </Grid>
+    </div>
+  )
+  }
+}

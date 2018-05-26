@@ -9,6 +9,7 @@ import AlbumPage from './page/AlbumPage';
 import MessageBoardPage from './page/MessageBoardPage';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
     <Router>

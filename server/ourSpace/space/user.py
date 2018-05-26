@@ -7,7 +7,7 @@ from django.forms.models import model_to_dict
 
 def api(request):
     if request.method == 'GET':
-        if UserModel.objects.filter(userName=request.GET['userName']).exists():
+        if UserModel.objects.filter(userName=request.GET['userName']).filter(userPassword=request.GET['password']).exists():
             query_user = UserModel.objects.filter(userName=request.GET['userName']).first()
             query_user_dict = model_to_dict(query_user)
             data = {
@@ -18,7 +18,7 @@ def api(request):
         else:
             data = {
                 'status': '00000001',
-                'message': '没有此用户'
+                'message': '用户名或密码错误。'
             }
             return HttpResponse(json.dumps(data), content_type='application/json')
     elif request.method == 'POST':
