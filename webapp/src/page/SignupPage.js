@@ -2,8 +2,8 @@ import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import axios from 'axios'
 import { message } from 'antd'
-import {URL} from '../constant/url'
-import {Status} from '../constant/status'
+import {URL} from '../config/url'
+import {Status} from '../config/constant'
 import { Route } from 'react-router-dom'
 
 export default class SignupPage extends React.Component{

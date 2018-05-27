@@ -1,7 +1,7 @@
 
 
 const LOCAL = 'http://localhost:8000';
-const CLOUD = 'http://www.tumogu.cn:8080';
+const CLOUD = 'http://tumogu.cn:8080';
 
 const local = false;
 

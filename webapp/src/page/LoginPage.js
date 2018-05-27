@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import axios from 'axios'
 import {URL} from '../constant/url'
-import {Status} from '../constant/status'
+import {Status} from '../config/constant'
 import { message } from 'antd'
 import { Route } from 'react-router-dom'
 

@@ -2,6 +2,7 @@ import React from 'react'
 import { Dropdown, Image } from 'semantic-ui-react'
 import { message } from 'antd'
 import { Route } from "react-router-dom"
+import { Constant } from '../config/constant'
 
 
 
@@ -34,7 +35,7 @@ export default class UserSetting extends React.Component{
         userObj = JSON.parse(userObj);
         const trigger = (
             <span>
-              <Image avatar src={userObj.userIcon} /> {userObj.userName}
+              <Image avatar src={userObj.userIcon || Constant.DEFAULT_USER_LOGO} /> {userObj.userName}
             </span>
           )
         const options = [
