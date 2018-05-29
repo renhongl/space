@@ -37,7 +37,7 @@ export default class SignupPage extends React.Component{
       userName: this.state.userName,
       userPassword: this.state.password 
     });
-    axios.post(URL.SIGNUP, data, {
+    axios.post(URL.USER, data, {
         headers: {
             'Content-Type': 'application/json',
         }

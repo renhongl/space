@@ -21,12 +21,20 @@ const Auth = {
     }
 }
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const Target = {
+  targetUser: '',
+  changeTarget(value) {
+    this.targetUser = value;
+  }
+}
+
+
+const PrivateRoute = ({ component: Component, Target: Target, ...rest }) => (
     <Route
       {...rest}
       render={props =>
         Auth.authed ? (
-          <Component {...props} />
+          <Component Target={Target} {...props}/>
         ) : (
           <Redirect
             to={{
@@ -38,11 +46,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     />
   );
 
-  const AuthRoute = ({ component: Component, Auth: Auth, ...rest }) => (
+  const AuthRoute = ({ component: Component, Auth: Auth,Target: Target, ...rest }) => (
     <Route
       {...rest}
       render={props =>
-          <Component Auth={Auth} />
+          <Component Auth={Auth} Target={Target}/>
       }
     />
   );
@@ -51,12 +59,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 ReactDOM.render(
     <Router>
         <div>
-        <PrivateRoute exact path="/" component={HomePage} />
-        <AuthRoute path="/login" component={LoginPage} Auth={Auth}/>
-        <AuthRoute path="/signup" component={SignupPage}  Auth={Auth}/>
-        <PrivateRoute path="/moment" component={MomentPage} />
-        <PrivateRoute path="/album" component={AlbumPage} />
-        <PrivateRoute path="/messageboard" component={MessageBoardPage} />
+        <PrivateRoute exact path="/" component={HomePage} Target={Target}/>
+        <AuthRoute path="/login" component={LoginPage} Auth={Auth} Target={Target}/>
+        <AuthRoute path="/signup" component={SignupPage}  Auth={Auth} Target={Target} />
+        <PrivateRoute path="/moment" component={MomentPage} Target={Target} />
+        <PrivateRoute path="/album" component={AlbumPage} Target={Target} />
+        <PrivateRoute path="/messageboard" component={MessageBoardPage} Target={Target} />
         </div>
     </Router>, 
     document.getElementById('root')

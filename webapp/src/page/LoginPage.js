@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import axios from 'axios'
-import {URL} from '../constant/url'
+import {URL} from '../config/url'
 import {Status} from '../config/constant'
 import { message } from 'antd'
 import { Route } from 'react-router-dom'
@@ -34,7 +34,7 @@ export default class LoginPage extends React.Component{
   }
 
   onLogin = (history) => {
-    axios.get(URL.LOGIN, {
+    axios.get(URL.USER, {
       params: {
         userName: this.state.userName,
         password: this.state.password
@@ -43,6 +43,7 @@ export default class LoginPage extends React.Component{
       if (result.data.status === Status.SUCCESS) {
         message.success(`登陆成功，欢迎"${this.state.userName}"访问我们的空间。`);
         window.sessionStorage.setItem('userObj', JSON.stringify(result.data.result));
+        this.props.Target.changeTarget(result.data.result.userName);
         this.props.Auth.login();
         setTimeout(() => {
           history.push('/');

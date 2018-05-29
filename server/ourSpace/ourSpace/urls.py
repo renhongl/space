@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from space import user
+from space import messageboard
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', user.api)
+    path('user/', user.api),
+    path('messageboard/', messageboard.api),
 ]

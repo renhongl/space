@@ -9,3 +9,22 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.ui.comments{
+  width: 100%;
+}
+
+.ui.inverted.vertical.center.aligned.segment{
+  min-height: 0 !important;
+}
+
+.ui.feed{
+  width: 40%;
+  margin: 0 auto;
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+
+.ui.feed>.event{
+  margin-top: 50px;
+}

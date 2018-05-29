@@ -8,7 +8,6 @@ class HomePage extends Component{
     const { match } = this.props;
     return (
       <PageLayout path={match.path}>
-        content
       </PageLayout>
     )
   }
